@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+from gendiff.generate_diff import generate_diff
 
 
 def main():
@@ -11,6 +12,8 @@ def main():
 
     args = parser.parse_args()
     print(args.accumulate(args.integers))
+
+    print(generate_diff)
 
 
 if __name__ == '__main__':
