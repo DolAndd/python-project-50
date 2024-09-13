@@ -3,7 +3,7 @@ install:
 
 
 prog:
-	poetry run gendiff -h
+	poetry run gendiff
 
 
 build:
