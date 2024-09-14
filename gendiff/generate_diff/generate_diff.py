@@ -2,18 +2,28 @@ import json
 
 
 def convert_bool(value):
-    if value == True:
+    if value is True:
         return 'true'
-    elif value == False:
+    elif value is False:
         return 'false'
     return value
 
 
+def read_json(pathfile):
+    return json.load(open(pathfile, 'r'))
+
+
+def convert_dict_to_str(dictionary):
+    result_str = ''
+    for key, value in dictionary.items():
+        result_str += f' {key}: {value}\n'
+    return result_str
+
+
 def gen_diff(pathfile_1, pathfile_2):
-    file_1 = json.load(open(pathfile_1, 'r'))
-    file_2 = json.load(open(pathfile_2, 'r'))
+    file_1 = read_json(pathfile_1)
+    file_2 = read_json(pathfile_2)
     result = {}
-    result_str = '{\n'
     for i in file_1:
         if i in file_2 and file_1[i] == file_2[i]:
             result[f'  {i}'] = convert_bool(file_1[i])
@@ -27,6 +37,4 @@ def gen_diff(pathfile_1, pathfile_2):
         elif i not in file_1:
             result[f'+ {i}'] = convert_bool(file_2[i])
     result_dict = dict(sorted(result.items(), key=lambda x: x[0][2:]))
-    for key, value in result_dict.items():
-        result_str += f' {key}: {value}\n'
-    return result_str + '}'
+    return '{\n' + convert_dict_to_str(result_dict) + '}'
