@@ -9,9 +9,14 @@ packages = [{ include = "gendiff" }]
 [tool.poetry.dependencies]
 python = "^3.10"
 argparse = "^1.4.0"
+pytest-cov = "^5.0.0"
 
 [tool.poetry.scripts]
 gendiff = "gendiff.scripts.gendiff:main"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.3"
+flake8 = "^7.1.1"
 
 [build-system]
 requires = ["poetry-core"]

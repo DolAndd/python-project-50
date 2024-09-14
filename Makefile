@@ -19,7 +19,7 @@ package-install:
 
 
 lint:
-	poetry run flake8 brain_games
+	poetry run flake8 gendiff
 
 
 reinstall:
@@ -30,7 +30,7 @@ update: install build publish reinstall
 
 
 test-coverage:
-	poetry run pytest --cov=brain_games --cov-report xml
+	poetry run pytest --cov=gendiff --cov-report xml
 
 
 test:
@@ -41,5 +41,5 @@ selfcheck:
 	poetry check
 
 
-check: selfcheck test lint
+check: test lint
 
