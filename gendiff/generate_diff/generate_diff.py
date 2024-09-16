@@ -1,4 +1,4 @@
-import json
+from gendiff.generate_diff.parser import files_parser
 
 
 def convert_bool(value):
@@ -9,10 +9,6 @@ def convert_bool(value):
     return value
 
 
-def read_json(pathfile):
-    return json.load(open(pathfile, 'r'))
-
-
 def convert_dict_to_str(dictionary):
     result_str = ''
     for key, value in dictionary.items():
@@ -21,8 +17,8 @@ def convert_dict_to_str(dictionary):
 
 
 def gen_diff(pathfile_1, pathfile_2):
-    file_1 = read_json(pathfile_1)
-    file_2 = read_json(pathfile_2)
+    file_1 = files_parser(pathfile_1)
+    file_2 = files_parser(pathfile_2)
     result = {}
     for i in file_1:
         if i in file_2 and file_1[i] == file_2[i]:
