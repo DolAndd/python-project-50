@@ -1,7 +1,7 @@
 def get_changed_value(value):
     if isinstance(value, dict):
         return '[complex value]'
-    elif value in ('false', 'true', 'null'):
+    elif value in ('false', 'true', 'null') or isinstance(value, int):
         return value
     return f"'{value}'"
 
