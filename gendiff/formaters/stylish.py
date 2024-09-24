@@ -33,5 +33,5 @@ def get_stylish_format(sorted_diff):
             if v['type'] == 'nested':
                 text += (f"{step_depth}  {k}: "
                          f"{walk(v['value'], depth + 1)}\n")
-        return text + f"{' ' * (4 * depth-4)}" + '}'
+        return text + f"{' ' * (4 * depth - 4)}" + '}'
     return walk(sorted_diff, 1)
