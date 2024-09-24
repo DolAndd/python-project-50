@@ -15,22 +15,23 @@ def get_stylish_format(sorted_diff):
     def walk(node, depth):
         text = '{\n'
         for k, v in node.items():
+            step_depth = ' ' * (4 * depth - 2)
             if v['type'] == 'unchanged':
-                text += (f"{' '*(4*depth - 2)}  {k}: "
+                text += (f"{step_depth}  {k}: "
                          f"{get_tree_from_dict(v['value'], depth)}\n")
             if v['type'] == 'added':
-                text += (f"{' '*(4*depth - 2)}+ {k}: "
+                text += (f"{step_depth}+ {k}: "
                          f"{get_tree_from_dict(v['value'], depth)}\n")
             if v['type'] == 'removed':
-                text += (f"{' '*(4*depth - 2)}- {k}: "
+                text += (f"{step_depth}- {k}: "
                          f"{get_tree_from_dict(v['value'], depth)}\n")
             if v['type'] == 'changed':
-                text += (f"{' '*(4*depth - 2)}- {k}: "
+                text += (f"{step_depth}- {k}: "
                          f"{get_tree_from_dict(v['old_value'], depth)}\n")
-                text += (f"{' '*(4*depth - 2)}+ {k}: "
+                text += (f"{step_depth}+ {k}: "
                          f"{get_tree_from_dict(v['new_value'], depth)}\n")
             if v['type'] == 'nested':
-                text += (f"{' '*(4*depth - 2)}  {k}: "
+                text += (f"{step_depth}  {k}: "
                          f"{walk(v['value'], depth + 1)}\n")
         return text + f"{' '*(4*depth-4)}" + '}'
     return walk(sorted_diff, 1)

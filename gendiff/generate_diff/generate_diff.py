@@ -1,6 +1,7 @@
 from gendiff.generate_diff.parser import files_parser
 from gendiff.formaters.stylish import get_stylish_format
 from gendiff.formaters.plain import get_plain_format
+from gendiff.formaters.json import get_json_format
 
 
 def convert_bool(value):
@@ -45,3 +46,8 @@ def generate_diff(pathfile_1, pathfile_2, format_name='stylish'):
         return get_stylish_format(tree)
     elif format_name == 'plain':
         return get_plain_format(tree)
+    elif format_name == 'json':
+        return get_json_format(tree)
+    elif format_name not in ('stylish', 'plain', 'json'):
+        return ("Incorrect formatter type. Please select one of the options: "
+                "'stylish', 'plain', 'json'")
