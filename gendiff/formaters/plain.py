@@ -22,4 +22,4 @@ def get_plain_format(sorted_diff):
             elif v['type'] == 'nested':
                 result_text += iner(v['value'], f'{root + k}.')
         return result_text
-    return iner(sorted_diff, '')
+    return (iner(sorted_diff, ''))[:-1]
