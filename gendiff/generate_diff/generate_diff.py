@@ -1,4 +1,4 @@
-from gendiff.generate_diff.parser import files_parser
+from gendiff.generate_diff.parser import get_file_data
 from gendiff.formaters.stylish import get_stylish_format
 from gendiff.formaters.plain import get_plain_format
 from gendiff.formaters.json import get_json_format
@@ -39,8 +39,8 @@ def gen_diff(file_1, file_2):
 
 
 def generate_diff(pathfile_1, pathfile_2, format_name='stylish'):
-    file_one = files_parser(pathfile_1)
-    file_two = files_parser(pathfile_2)
+    file_one = get_file_data(pathfile_1)
+    file_two = get_file_data(pathfile_2)
     tree = gen_diff(file_one, file_two)
     if format_name == 'stylish':
         return get_stylish_format(tree)

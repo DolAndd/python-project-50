@@ -2,18 +2,19 @@ import json
 import yaml
 
 
-def read_json(pathfile):
-    return json.load(open(pathfile, 'r'))
-
-
-def read_yaml(pathfile):
-    return yaml.load(open(pathfile, 'r'), Loader=yaml.FullLoader)
-
-
-def files_parser(pathfile_x):
-    json_format = '.json'
+def get_file_data(pathfile):
+    file_format = ''
     yaml_format = ('.yml', '.yaml')
-    if pathfile_x.endswith(json_format):
-        return read_json(pathfile_x)
-    elif pathfile_x.endswith(yaml_format):
-        return read_yaml(pathfile_x)
+    if pathfile.endswith('.json'):
+        file_format = 'json'
+    elif pathfile.endswith(yaml_format):
+        file_format = 'yaml'
+    data = open(pathfile, 'r')
+    return files_parsers(data, file_format)
+
+
+def files_parsers(data, file_format):
+    if file_format == 'json':
+        return json.load(data)
+    elif file_format == 'yaml':
+        return yaml.load(data, Loader=yaml.FullLoader)
