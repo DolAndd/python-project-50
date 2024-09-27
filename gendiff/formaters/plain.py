@@ -17,14 +17,15 @@ def get_plain_format(sorted_diff):
         result_text = ''
         for node in nodes:
             if node['type'] == 'added':
-                result_text += (f"Property '{root + node['key']}' was added with value: "
+                result_text += (f"Property '{root + node['key']}' "
+                                f"was added with value: "
                                 f"{get_changed_value(node['value'])}\n")
             elif node['type'] == 'removed':
                 result_text += f"Property '{root + node['key']}' was removed\n"
             elif node['type'] == 'changed':
                 result_text += (f"Property '{root + node['key']}' was updated. "
-                                f"From {get_changed_value(node['old_value'])} to "
-                                f"{get_changed_value(node['new_value'])}\n")
+                                f"From {get_changed_value(node['old_value'])} "
+                                f"to {get_changed_value(node['new_value'])}\n")
             elif node['type'] == 'nested':
                 result_text += iner(node['value'], f'{root + node["key"]}.')
         return result_text
