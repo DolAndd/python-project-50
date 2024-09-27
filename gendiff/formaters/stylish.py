@@ -1,37 +1,41 @@
-def get_tree_from_dict(coll, step):
+def convert_bool(text):
+    if text is True:
+        return 'true'
+    elif text is False:
+        return 'false'
+    elif text is None:
+        return 'null'
+    else:
+        return text
+
+
+def get_tree_value(coll, step):
     string_tree = ''
     if isinstance(coll, dict):
         string_tree += '{\n'
         for key, value in coll.items():
-            string_tree += (f"{' ' * (4 * (step + 1))}{key}: "
-                            f"{get_tree_from_dict(value, step + 1)}\n")
-        string_tree += (' ' * (4 * step)) + '}'
+            string_tree += f"{' '*(4*(step+1))}{key}: {get_tree_value(value, step+1)}\n"
+        string_tree += (' '*(4*step)) + '}'
     else:
-        string_tree += str(coll)
+        string_tree += str(convert_bool(coll))
     return string_tree
 
 
 def get_stylish_format(sorted_diff):
-    def walk(node, depth):
+    def walk(nodes, depth):
+        depth_step = ' '*(4*depth - 2)
         text = '{\n'
-        for k, v in node.items():
-            step_depth = ' ' * (4 * depth - 2)
-            if v['type'] == 'unchanged':
-                text += (f"{step_depth}  {k}: "
-                         f"{get_tree_from_dict(v['value'], depth)}\n")
-            if v['type'] == 'added':
-                text += (f"{step_depth}+ {k}: "
-                         f"{get_tree_from_dict(v['value'], depth)}\n")
-            if v['type'] == 'removed':
-                text += (f"{step_depth}- {k}: "
-                         f"{get_tree_from_dict(v['value'], depth)}\n")
-            if v['type'] == 'changed':
-                text += (f"{step_depth}- {k}: "
-                         f"{get_tree_from_dict(v['old_value'], depth)}\n")
-                text += (f"{step_depth}+ {k}: "
-                         f"{get_tree_from_dict(v['new_value'], depth)}\n")
-            if v['type'] == 'nested':
-                text += (f"{step_depth}  {k}: "
-                         f"{walk(v['value'], depth + 1)}\n")
-        return text + f"{' ' * (4 * depth - 4)}" + '}'
+        for node in nodes:
+            if node['type'] == 'unchanged':
+                text += f"{depth_step}  {node['key']}: {get_tree_value(node['value'], depth)}\n"
+            if node['type'] == 'added':
+                text += f"{depth_step}+ {node['key']}: {get_tree_value(node['value'], depth)}\n"
+            if node['type'] == 'removed':
+                text += f"{depth_step}- {node['key']}: {get_tree_value(node['value'], depth)}\n"
+            if node['type'] == 'changed':
+                text += f"{depth_step}- {node['key']}: {get_tree_value(node['old_value'], depth)}\n"
+                text += f"{depth_step}+ {node['key']}: {get_tree_value(node['new_value'], depth)}\n"
+            if node['type'] == 'nested':
+                text += f"{depth_step}  {node['key']}: {walk(node['value'], depth + 1)}\n"
+        return text + f"{' '*(4*depth-4)}" + '}'
     return walk(sorted_diff, 1)
