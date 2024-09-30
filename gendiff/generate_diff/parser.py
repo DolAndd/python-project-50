@@ -1,16 +1,14 @@
 import json
 import yaml
 
+YAML_FORMAT = ('.yml', '.yaml')
 
-def get_file_data(pathfile):
-    file_format = ''
-    yaml_format = ('.yml', '.yaml')
+
+def check_format_file(pathfile):
     if pathfile.endswith('.json'):
-        file_format = 'json'
-    elif pathfile.endswith(yaml_format):
-        file_format = 'yaml'
-    data = open(pathfile, 'r')
-    return files_parsers(data, file_format)
+        return 'json'
+    elif pathfile.endswith(YAML_FORMAT):
+        return 'yaml'
 
 
 def files_parsers(data, file_format):
@@ -18,3 +16,8 @@ def files_parsers(data, file_format):
         return json.load(data)
     elif file_format == 'yaml':
         return yaml.load(data, Loader=yaml.FullLoader)
+
+
+def get_file_data(pathfile):
+    data = open(pathfile, 'r')
+    return files_parsers(data, check_format_file(pathfile))

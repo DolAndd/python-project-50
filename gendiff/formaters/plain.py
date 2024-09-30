@@ -12,7 +12,7 @@ def get_changed_value(value):
     return f"'{value}'"
 
 
-def get_plain_format(sorted_diff):
+def get_plain_format(diff_tree):
     def iner(nodes, root):
         result_text = ''
         for node in nodes:
@@ -29,4 +29,4 @@ def get_plain_format(sorted_diff):
             elif node['type'] == 'nested':
                 result_text += iner(node['value'], f'{root + node["key"]}.')
         return result_text
-    return (iner(sorted_diff, ''))[:-1]
+    return (iner(diff_tree, ''))[:-1]

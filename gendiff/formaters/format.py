@@ -10,3 +10,5 @@ def choose_formater(diff, format_name):
         return get_plain_format(diff)
     elif format_name == 'json':
         return get_json_format(diff)
+    else:
+        raise ValueError(f'Unsupported formatter: {format_name}')

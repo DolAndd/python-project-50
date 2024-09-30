@@ -22,7 +22,7 @@ def get_tree_value(coll, step):
     return string_tree
 
 
-def get_stylish_format(sorted_diff):
+def get_stylish_format(diff_tree):
     def walk(nodes, depth):
         depth_step = ' ' * (4 * depth - 2)
         text = '{\n'
@@ -45,4 +45,4 @@ def get_stylish_format(sorted_diff):
                 text += (f"{depth_step}  {node['key']}: "
                          f"{walk(node['value'], depth + 1)}\n")
         return text + f"{' ' * (4 * depth - 4)}" + '}'
-    return walk(sorted_diff, 1)
+    return walk(diff_tree, 1)
