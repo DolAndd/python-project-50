@@ -2,10 +2,11 @@ import json
 import yaml
 
 YAML_FORMAT = ('.yml', '.yaml')
+JSON_FORMAT = '.json'
 
 
 def check_format_file(pathfile):
-    if pathfile.endswith('.json'):
+    if pathfile.endswith(JSON_FORMAT):
         return 'json'
     elif pathfile.endswith(YAML_FORMAT):
         return 'yaml'
